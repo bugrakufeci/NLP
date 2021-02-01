@@ -1,4 +1,7 @@
 import json
+import re
+from nltk import tokenize
+
 
 f = open('nerdatanotag.txt', 'r', encoding='utf8')
 paragraf = f.read()
@@ -826,6 +829,7 @@ print(len(isaretliKisiListesi))
 
 isaretlenenKurumListesi = []
 
+print("Kurum isimleri üzerinde çalışılıyor...")
 keywords = open('kurumAnahtar.txt', 'r', encoding='utf-8')
 unvansayisi = keywords.readlines()
 for i in unvansayisi:
@@ -954,13 +958,160 @@ for i in range(kelimesayisi):
     else:
         continue
 
+print("Kurum ismi işaretleme tamamlandı.")
+print(len(isaretlenenKurumListesi))
+
+print("Tarih ve saat işaretlemeleri yapılıyor.")
+
+isaretlenmisTarihListesi = []
+
+
+def tarihBul(self):
+    aylar = "Ocak|ocak|Şubat|şubat|Mart|mart|nisan|Nisan|mayıs|Mayıs|Haziran|haziran|Temmuz|temmuz|Ağustos|ağustos|Eylül|eylül|Ekim|ekim|Kasım|kasım|aralık|Aralık"
+    aylarRakamsal = "\d{2}"
+
+    ayBul = "(" + aylar + "|" + aylarRakamsal + ")"
+
+    ayırıcı1 = "[\s]"
+    ayırıcı2 = "[\-]"
+    ayırıcı3 = "[\/]"
+
+    ayırıcılar = "(" + ayırıcı1 + "|" + ayırıcı2 + "|" + ayırıcı3 + ")"
+
+    gün1 = "\d{2}"
+    gün2 = "\d{1}"
+
+    günler = "(" + gün1 + "|" + gün2 + ")"
+
+    yıl = "\d{4}"
+
+    regex = günler + ayırıcılar + ayBul + ayırıcılar + yıl
+
+    cümleler = tokenize.sent_tokenize(self)
+    for cümle in cümleler:
+        hepsini_buldum = False
+        while  not hepsini_buldum:
+
+            tarih = re.search(regex, cümle)
+            if tarih:
+                isaretlenmisTarihListesi.append(tarih.group())
+                cümle = cümle[tarih.span()[1]:]
+            else:
+                hepsini_buldum = True
+
+def anahtarBul(self):
+
+   regex="tarih|saat|Saat|dün|evelsi gün|bugün|yarın|yılında|seneye|zaman|pazartesi|salı|çarşamba|perşembe|cuma|cumartesi|pazar|Pazartesi|Salı|Çarşamba|Perşembe|Cuma|Cumartesi|Pazar|hafta|gün|Günler"
+
+   cümleler = tokenize.sent_tokenize(self)
+   for cümle in cümleler:
+       hepsini_buldum = False
+       while not hepsini_buldum:
+
+           tarih = re.search(regex, cümle)
+           if tarih:
+               isaretlenmisTarihListesi.append(tarih.group())
+               cümle = cümle[tarih.span()[1]:]
+           else:
+               hepsini_buldum = True
+
+def saatBul(self):
+
+    regex =r"\d{2}:\d{2}"
+
+    cümleler = tokenize.sent_tokenize(self)
+    for cümle in cümleler:
+        hepsini_buldum = False
+        while not hepsini_buldum:
+
+            tarih = re.search(regex, cümle)
+            if tarih:
+                isaretlenmisTarihListesi.append(tarih.group())
+                cümle = cümle[tarih.span()[1]:]
+            else:
+                hepsini_buldum = True
+
+def gunayBul(self):
+    aylar = "Ocak|ocak|Şubat|şubat|Mart|mart|nisan|Nisan|mayıs|Mayıs|Haziran|haziran|Temmuz|temmuz|Ağustos|ağustos|Eylül|eylül|Ekim|ekim|Kasım|kasım|aralık|Aralık"
+    aylarRakamsal = "\d{2}"
+
+    ayBul = aylar
+
+    ayırıcı1 = "[\s]"
+
+
+    ayırıcılar =  ayırıcı1
+
+    gün1 = "\d{2}"
+    gün2 = "\d{1}"
+
+    günler = "(" + gün1 + "|" + gün2 + ")"
+
+    yıl = "\d{4}"
+
+    regex = ayırıcılar+günler + ayırıcılar + ayBul + ayırıcılar + "\D"
+
+    cümleler = tokenize.sent_tokenize(self)
+    for cümle in cümleler:
+        hepsini_buldum = False
+        while not hepsini_buldum:
+
+            tarih = re.search(regex, cümle)
+            if tarih:
+                isaretlenmisTarihListesi.append(tarih.group())
+                cümle = cümle[tarih.span()[1]:]
+            else:
+                hepsini_buldum = True
+
+def tarihBul1(self):
+    aylar = "Ocak|ocak|Şubat|şubat|Mart|mart|nisan|Nisan|mayıs|Mayıs|Haziran|haziran|Temmuz|temmuz|Ağustos|ağustos|Eylül|eylül|Ekim|ekim|Kasım|kasım|aralık|Aralık"
+    aylarRakamsal = "\d{2}"
+
+    ayBul = "(" + aylar + "|" + aylarRakamsal + ")"
+
+    ayırıcı1 = "[\s]"
+    ayırıcı2 = "[\-]"
+    ayırıcı3 = "[\/]"
+
+    ayırıcılar = "(" + ayırıcı1 + "|" + ayırıcı2 + "|" + ayırıcı3 + ")"
+
+    gün1 = "\d{2}"
+    gün2 = "\d{1}"
+
+    günler = "(" + gün1 + "|" + gün2 + ")"
+
+    yıl = "\d{4}"
+
+    regex = yıl + ayırıcılar + yıl
+
+    cümleler = tokenize.sent_tokenize(self)
+    for cümle in cümleler:
+        hepsini_buldum = False
+        while not hepsini_buldum:
+
+            tarih = re.search(regex, cümle)
+            if tarih:
+                isaretlenmisTarihListesi.append(tarih.group())
+                cümle = cümle[tarih.span()[1]:]
+            else:
+                hepsini_buldum = True
+
+tarihBul(paragraf)
+anahtarBul(paragraf)
+saatBul(paragraf)
+gunayBul(paragraf)
+tarihBul1(paragraf)
+
+print("Tarih işaretlemesi tamamlandı.")
+print(len(isaretlenmisTarihListesi))
+
 etiketlenmisText = paragraf
 print("Derlem etiketleniyor...")
 isaretlenenYerIsimleri = list(dict.fromkeys(isaretlenenYerIsimleri))
 isaretlenmisParaListesi = list(dict.fromkeys(isaretlenmisParaListesi))
 isaretliKisiListesi = list(dict.fromkeys(isaretliKisiListesi))
-print(isaretlenenKurumListesi)
 isaretlenenKurumListesi = list(dict.fromkeys(isaretlenenKurumListesi))
+isaretlenmisTarihListesi = list(dict.fromkeys(isaretlenmisTarihListesi))
 
 
 for i in range(len(isaretliKisiListesi)):
@@ -977,6 +1128,10 @@ for i in range(len(isaretlenenYerIsimleri)):
 for i in range(len(isaretlenmisParaListesi)):
     etiketlenmisText = etiketlenmisText.replace(f'{isaretlenmisParaListesi[i]}',
                                                 f'<b_numex TYPE="MONEY">{isaretlenmisParaListesi[i]}<e_numex>')
+
+for i in range(len(isaretlenmisTarihListesi)):
+    etiketlenmisText = etiketlenmisText.replace(f'{isaretlenmisTarihListesi[i]}',
+                                                f'<b_numex TYPE="DATE">{isaretlenmisTarihListesi[i]}<e_numex>')
 
 for i in range(len(isaretlenenKurumListesi)):
     etiketlenmisText = etiketlenmisText.replace(f'{isaretlenenKurumListesi[i]}',
