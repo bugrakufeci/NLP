@@ -596,20 +596,21 @@ for i in range(kelimesayisi):
                     yazdır.write(",")
                     yazdır.write(x)
                     yazdır.close()
+                    isaretliKisiListesi.append(f"{liste[i]} {liste[i + 1]}")
                     liste[i + 1] = "<b_enamex TYPE='PERSON'> " + liste[i + 1] + " <e_enamex>"
                     isimsayac += 1
-                    isaretliKisiListesi.append(f"{liste[i]} {liste[i + 1]}")
+
                     continue
                 elif x[xS - 1] == '.':
                     x = x.replace('.', '')
-                    isaretliKisiListesi.append(f"{liste[i]} {x}")
                     yazdır = open('isimListem.txt', 'a', encoding='utf-8')
                     yazdır.write(",")
                     yazdır.write(x)
                     yazdır.close()
+                    isaretliKisiListesi.append(f"{liste[i + 1]}")
                     liste[i + 1] = "<b_enamex TYPE='PERSON'> " + liste[i + 1] + " <e_enamex>"
                     isimsayac += 1
-                    isaretliKisiListesi.append(f"{liste[i + 1]}")
+
                     continue
         else:
             continue
@@ -626,9 +627,10 @@ for i in range(kelimesayisi):
                     yazdır.write(",")
                     yazdır.write(x2)
                     yazdır.close()
+                    isaretliKisiListesi.append(f"{liste[i + 1]} {liste[i + 2]}")
                     liste[i + 2] = liste[i + 2] + " <e_enamex>"
                     isimsayac += 1
-                    isaretliKisiListesi.append(f"{liste[i + 1]} {liste[i + 2]}")
+
                     continue
                 elif x2[x2S - 1] == '.':
                     x2 = x2.replace('.', '')
@@ -636,16 +638,18 @@ for i in range(kelimesayisi):
                     yazdır.write(",")
                     yazdır.write(x2)
                     yazdır.close()
+                    isaretliKisiListesi.append(f"{liste[i + 1]} {liste[i + 2]}")
                     liste[i + 2] = liste[i + 2] + " <e_enamex>"
                     isimsayac += 1
-                    isaretliKisiListesi.append(f"{liste[i + 1]} {liste[i + 2]}")
+
                     continue
 
 
         else:
+            isaretliKisiListesi.append(f"{liste[i + 1]}")
             liste[i + 1] = liste[i + 1] + " <e_enamex>"
             isimsayac += 1
-            isaretliKisiListesi.append(f"{liste[i + 1]}")
+
             continue
         if x3[0].isupper() == 1:
             if x3[x3S - 1] != ',' and x3[x3S - 1] != '.':
@@ -653,8 +657,9 @@ for i in range(kelimesayisi):
                 yazdır.write(",")
                 yazdır.write(liste[i + 3])
                 yazdır.close()
-                liste[i + 3] = liste[i + 3] + " <e_enamex>"
                 isaretliKisiListesi.append(f"{liste[i + 1]} {liste[i + 2]} {liste[i + 3]}")
+                liste[i + 3] = liste[i + 3] + " <e_enamex>"
+
                 isimsayac += 1
             else:
                 if x3[x3S - 1] == ',':
@@ -663,9 +668,10 @@ for i in range(kelimesayisi):
                     yazdır.write(",")
                     yazdır.write(x3)
                     yazdır.close()
+                    isaretliKisiListesi.append(f"{liste[i + 1]} {liste[i + 2]} {liste[i + 3]}")
                     liste[i + 3] = liste[i + 3] + " <e_enamex>"
                     isimsayac += 1
-                    isaretliKisiListesi.append(f"{liste[i + 1]} {liste[i + 2]} {liste[i + 3]}")
+
                     continue
                 elif x3[x3S - 1] == '.':
                     x3 = x3.replace('.', '')
@@ -673,15 +679,17 @@ for i in range(kelimesayisi):
                     yazdır.write(",")
                     yazdır.write(x3)
                     yazdır.close()
+                    isaretliKisiListesi.append(f"{liste[i + 1]} {liste[i + 2]} {liste[i + 3]}")
                     liste[i + 3] = liste[i + 3] + " <e_enamex>"
                     isimsayac += 1
-                    isaretliKisiListesi.append(f"{liste[i + 1]} {liste[i + 2]} {liste[i + 3]}")
+
                     continue
 
         else:
+            isaretliKisiListesi.append(f"{liste[i + 1]} {liste[i + 2]}")
             liste[i + 2] = liste[i + 2] + " <e_enamex>"
             isimsayac += 1
-            isaretliKisiListesi.append(f"{liste[i + 1]} {liste[i + 2]}")
+
             continue
     else:
         continue
@@ -714,9 +722,10 @@ for i in range(kelimesayisi):
                     yazdır.write(",")
                     yazdır.write(x)
                     yazdır.close()
+                    isaretliKisiListesi.append(f"{liste[i - 1]}")
                     liste[i - 1] = "<b_enamex TYPE='PERSON'> " + liste[i - 1] + " <e_enamex>"
                     isimsayac += 1
-                    isaretliKisiListesi.append(f"{liste[i - 1]}")
+
                     continue
                 elif x[xS - 1] == '.':
                     x = x.replace('.', '')
@@ -724,9 +733,10 @@ for i in range(kelimesayisi):
                     yazdır.write(",")
                     yazdır.write(x)
                     yazdır.close()
+                    isaretliKisiListesi.append(f"{liste[i - 1]}")
                     liste[i - 1] = "<b_enamex TYPE='PERSON'> " + liste[i - 1] + " <e_enamex>"
                     isimsayac += 1
-                    isaretliKisiListesi.append(f"{liste[i - 1]}")
+
                     continue
         else:
             continue
@@ -743,9 +753,10 @@ for i in range(kelimesayisi):
                     yazdır.write(",")
                     yazdır.write(x2)
                     yazdır.close()
+                    isaretliKisiListesi.append(f"{liste[i - 2]} {liste[i - 1]}")
                     liste[i - 2] = "<b_enamex TYPE='PERSON'> " + liste[i - 2]
                     isimsayac += 1
-                    isaretliKisiListesi.append(f"{liste[i - 2]} {liste[i - 1]}")
+
                     continue
                 elif x2[x2S - 1] == '.':
                     x2 = x2.replace('.', '')
@@ -753,16 +764,18 @@ for i in range(kelimesayisi):
                     yazdır.write(",")
                     yazdır.write(x2)
                     yazdır.close()
+                    isaretliKisiListesi.append(f"{liste[i - 2]} {liste[i - 1]}")
                     liste[i - 2] = "<b_enamex TYPE='PERSON'> " + liste[i - 2]
                     isimsayac += 1
-                    isaretliKisiListesi.append(f"{liste[i - 2]} {liste[i - 1]}")
+
                     continue
 
 
         else:
+            isaretliKisiListesi.append(f"{liste[i - 1]}")
             liste[i - 1] = "<b_enamex TYPE='PERSON'> " + liste[i - 1]
             isimsayac += 1
-            isaretliKisiListesi.append(f"{liste[i - 1]}")
+
 
             continue
         if x3[0].isupper() == 1:
@@ -771,9 +784,10 @@ for i in range(kelimesayisi):
                 yazdır.write(",")
                 yazdır.write(liste[i - 3])
                 yazdır.close()
+                isaretliKisiListesi.append(f"{liste[i - 3]} {liste[i - 2]} {liste[i - 1]}")
                 liste[i - 3] = "<b_enamex TYPE='PERSON'> " + liste[i - 3]
                 isimsayac += 1
-                isaretliKisiListesi.append(f"{liste[i - 3]} {liste[i - 2]} {liste[i - 1]}")
+
             else:
                 if x3[x3S - 1] == ',':
                     x3 = x3.replace(',', '')
@@ -781,9 +795,10 @@ for i in range(kelimesayisi):
                     yazdır.write(",")
                     yazdır.write(x3)
                     yazdır.close()
+                    isaretliKisiListesi.append(f"{liste[i - 3]} {liste[i - 2]} {liste[i - 1]}")
                     liste[i - 3] = "<b_enamex TYPE='PERSON'> " + liste[i - 3]
                     isimsayac += 1
-                    isaretliKisiListesi.append(f"{liste[i - 3]} {liste[i - 2]} {liste[i - 1]}")
+
                     continue
                 elif x3[x3S - 1] == '.':
                     x3 = x3.replace('.', '')
@@ -791,14 +806,16 @@ for i in range(kelimesayisi):
                     yazdır.write(",")
                     yazdır.write(x3)
                     yazdır.close()
+                    isaretliKisiListesi.append(f"{liste[i - 3]} {liste[i - 2]} {liste[i - 1]}")
                     liste[i - 3] = "<b_enamex TYPE='PERSON'> " + liste[i - 3]
                     isimsayac += 1
-                    isaretliKisiListesi.append(f"{liste[i - 3]} {liste[i - 2]} {liste[i - 1]}")
+
                     continue
 
         else:
-            liste[i - 2] = "<b_enamex TYPE='PERSON'> " + liste[i - 2]
             isaretliKisiListesi.append(f"{liste[i - 2]} {liste[i - 1]}")
+            liste[i - 2] = "<b_enamex TYPE='PERSON'> " + liste[i - 2]
+
             isimsayac += 1
             continue
     else:
@@ -839,9 +856,10 @@ for i in range(kelimesayisi):
                     yazdır.write(",")
                     yazdır.write(x)
                     yazdır.close()
+                    isaretlenenKurumListesi.append(f"{liste[i - 1]} {liste[i]}")
                     liste[i - 1] = "<b_enamex TYPE='ORGANIZATION'> " + liste[i - 1] + liste[i] + " <e_enamex>"
                     kurumsayac += 1
-                    isaretlenenKurumListesi.append(f"{liste[i - 1]} {liste[i]}")
+
                     continue
                 elif x[xS - 1] == '.':
                     x = x.replace('.', '')
@@ -849,9 +867,10 @@ for i in range(kelimesayisi):
                     yazdır.write(",")
                     yazdır.write(x)
                     yazdır.close()
+                    isaretlenenKurumListesi.append(f"{liste[i - 1]} {liste[i]}")
                     liste[i - 1] = "<b_enamex TYPE='ORGANIZATION'> " + liste[i - 1] + liste[i] + " <e_enamex>"
                     kurumsayac += 1
-                    isaretlenenKurumListesi.append(f"{liste[i - 1]} {liste[i]}")
+
                     continue
         else:
             continue
@@ -868,9 +887,10 @@ for i in range(kelimesayisi):
                     yazdır.write(",")
                     yazdır.write(x2)
                     yazdır.close()
+                    isaretlenenKurumListesi.append(f"{liste[i - 2]} {liste[i - 1]}")
                     liste[i - 2] = "<b_enamex TYPE='ORGANIZATION'> " + liste[i - 2]
                     kurumsayac += 1
-                    isaretlenenKurumListesi.append(f"{liste[i - 2]} {liste[i - 1]}")
+
                     continue
                 elif x2[x2S - 1] == '.':
                     x2 = x2.replace('.', '')
@@ -878,9 +898,10 @@ for i in range(kelimesayisi):
                     yazdır.write(",")
                     yazdır.write(x2)
                     yazdır.close()
+                    isaretlenenKurumListesi.append(f"{liste[i - 2]} {liste[i - 1]}")
                     liste[i - 2] = "<b_enamex TYPE='ORGANIZATION'> " + liste[i - 2]
                     kurumsayac += 1
-                    isaretlenenKurumListesi.append(f"{liste[i - 2]} {liste[i - 1]}")
+
                     continue
 
 
@@ -896,9 +917,10 @@ for i in range(kelimesayisi):
                 yazdır.write(",")
                 yazdır.write(liste[i - 3])
                 yazdır.close()
+                isaretlenenKurumListesi.append(f"{liste[i - 3]} {liste[i - 2]} {liste[i - 3]}")
                 liste[i - 3] = "<b_enamex TYPE='ORGANIZATION'> " + liste[i - 3]
                 kurumsayac += 1
-                isaretlenenKurumListesi.append(f"{liste[i - 3]} {liste[i - 2]} {liste[i - 3]}")
+
             else:
                 if x3[x3S - 1] == ',':
                     x3 = x3.replace(',', '')
@@ -906,9 +928,10 @@ for i in range(kelimesayisi):
                     yazdır.write(",")
                     yazdır.write(x3)
                     yazdır.close()
+                    isaretlenenKurumListesi.append(f"{liste[i - 3]} {liste[i - 2]} {liste[i - 1]}")
                     liste[i - 3] = "<b_enamex TYPE='ORGANIZATION'> " + liste[i - 3]
                     kurumsayac += 1
-                    isaretlenenKurumListesi.append(f"{liste[i - 3]} {liste[i - 2]} {liste[i - 1]}")
+
                     continue
                 elif x3[x3S - 1] == '.':
                     x3 = x3.replace('.', '')
@@ -916,15 +939,17 @@ for i in range(kelimesayisi):
                     yazdır.write(",")
                     yazdır.write(x3)
                     yazdır.close()
+                    isaretlenenKurumListesi.append(f"{liste[i - 3]} {liste[i - 2]} {liste[i - 1]}")
                     liste[i - 3] = "<b_enamex TYPE='ORGANIZATION'> " + liste[i - 3]
                     kurumsayac += 1
-                    isaretlenenKurumListesi.append(f"{liste[i - 3]} {liste[i - 2]} {liste[i - 1]}")
+
                     continue
 
         else:
+            isaretlenenKurumListesi.append(f"{liste[i - 2]} {liste[i - 1]}")
             liste[i - 2] = "<b_enamex TYPE='ORGANIZATION'> " + liste[i - 2]
             kurumsayac += 1
-            isaretlenenKurumListesi.append(f"{liste[i - 2]} {liste[i - 1]}")
+
             continue
     else:
         continue
@@ -936,6 +961,7 @@ isaretlenmisParaListesi = list(dict.fromkeys(isaretlenmisParaListesi))
 isaretliKisiListesi = list(dict.fromkeys(isaretliKisiListesi))
 print(isaretlenenKurumListesi)
 isaretlenenKurumListesi = list(dict.fromkeys(isaretlenenKurumListesi))
+
 
 for i in range(len(isaretliKisiListesi)):
     etiketlenmisText = etiketlenmisText.replace(f'{isaretliKisiListesi[i]}',
