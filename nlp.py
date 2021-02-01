@@ -1,42 +1,41 @@
 import json
 
-paragraf = 'Afyonkarahisar’ın Dinar ilçesinde, tır ile otomobilin çarpıştığı kazada, Vehbi Özen ve eşi Ayşe Özen, ' \
-           'kayınvalidesi Cemile Kılıçaslan ile 9 yaşındaki çocukları hayatını kaybetti. Kazada hafif yaralanan tır ' \
-           'Akdeniz. sürücüsü Murat K. ise ayakta tedavi edildi. Erciyes dağı. '
+f = open('nerdatanotag.txt', 'r', encoding='utf8')
+paragraf = f.read()
+f.close()
 
 # TODO Anahtar kelime listeleri txt dosyasına aktarılmalı
 
+# Bu kelime listesi işaretlenmesi gereken kelimeden önce gelebilecek kelimeleri kapsar. Örn : Kuzey Amerika
 anahtarKelimeListesi1 = [
-    "kuzey",
-    "Kuzey"
-    "güney",
+    "Kuzey",
     "Güney",
-    "Doğu"
-    "doğu",
-    "batı",
-    "Batı"
-    "dağ",
-    "deniz",
-    "göl",
-    "sıradağ",
-    "ova",
-    "okyanus",
-    "körfez",
-    "tepe",
-    "köprü",
-    "boğaz",
-    "kanal",
+    "Doğu",
+    "Batı",
+    "Deniz",
+    "Göl",
+    "Sıradağ",
+    "Ova",
+    "Okyanus",
+    "Körfez",
+    "Tepe",
+    "Köprü",
+    "Boğaz",
+    "Kanal",
     "başkent",
     "ilçe"
 ]
 
+# Bu kelime listesi işaretlenmesi gereken kelimeden sonra gelen kelimeleri kapsar. Örn: Topkapı Sarayı
 anahtarKelimeListesi2 = [
-    "durak",
+    "pist",
+    "site",
     "durağı",
-    "dağ",
-    "cadde",
-    "sokak",
-    "köy",
+    "Dağ",
+    "Cadde",
+    "Sokak",
+    "Üniversite",
+    "Köy",
     "mahalle",
     "polikliniği",
     "karakolu",
@@ -52,50 +51,51 @@ anahtarKelimeListesi2 = [
     "havaalanı",
     "limanı",
     "kafe",
-    "merkezi",
     "tesisi",
-    "stadyumu",
+    "Stadyumu",
+    "Stad",
     "parkı",
-    "sahili",
-    "sahil"
-    "plaj",
-    "daire",
-    "büro",
-    "lise",
-    "ilkokul",
-    "ortaokul",
-    "üniversite",
-    "atölye",
-    "otel",
-    "pansiyon",
-    "hamam",
-    "galeri",
-    "market",
-    "mezarlık",
-    "banka",
+    "Meyhane",
+    "Sahili",
+    "Plajı",
+    "Cafe",
+    "Otel",
+    "Pansiyon",
+    "Hamam",
+    "Market",
+    "mezarlığı",
     "cami",
+    "manastır",
+    "Salon",
     "cemevi",
     "kilise",
     "katedral",
     "şapel",
     "istasyon",
-    "saray",
+    "Sarayı",
+    "Burnu",
     "iskele",
-    "yalı",
-    "köşk",
-    "kasrı",
-    "kampüs",
+    "Yalı",
+    "Köşk",
+    "Kasrı",
+    "Kampüs",
     "yerleşke",
-    "orman",
-    "baraj"
+    "Orman",
+    "Baraj"
 ]
 
-anahtarKelimeListesi3 = ["köy", "deniz", "doğu"]
+# Bu kelime listesi bitişik halde bulunduğunda işaretlenmesi gereken kelimeleri kapsar. Örn : Ortadoğu
+anahtarKelimeListesi3 = ["köy", "deniz", "doğu", "istan"]
+
+# Bu kelime listesi ek alan kelimenin içermemesi gereken kelimeleri kapsar. Örn: Trabzonspor'a
+anahtarKelimeListesi4 = ["ocak", "şubat", "mart", "nisan", "mayıs", "haziran", "temmuz", "ağustos", "eylül", "ekim",
+                         "kasım", "aralık" "spor", "festival", "kupa", "lig", "şölen", "balo"]
 
 ulkeListesi = [
     'Türkiye', 'ABD Virgin Adaları', 'Afganistan', 'Aland Adaları',
     'Almanya', 'Amerika Birleşik Devletleri', 'Amerika Birleşik Devletleri Küçük Dış Adaları',
     'Amerikan Samoası',
+    'ABD',
     'Andora',
     'Angola',
     'Anguilla',
@@ -108,6 +108,7 @@ ulkeListesi = [
     'Avustralya',
     'Avusturya',
     'Azerbaycan',
+    'Osmanlı',
     'Bahamalar',
     'Bahreyn',
     'Bangladeş',
@@ -118,9 +119,10 @@ ulkeListesi = [
     'Benin',
     'Bermuda',
     'Beyaz Rusya',
+    'Belarus',
     'Bhutan',
-    'Bilinmeyen veya Geçersiz Bölge',
     'Birleşik Arap Emirlikleri',
+    'BAE',
     'Birleşik Krallık',
     'Bolivya',
     'Bosna Hersek',
@@ -140,6 +142,7 @@ ulkeListesi = [
     'Cook Adaları',
     'Çad',
     'Çek Cumhuriyeti',
+    'Çekya',
     'Çin',
     'Danimarka',
     'Dominik',
@@ -153,7 +156,7 @@ ulkeListesi = [
     'Ermenistan',
     'Estonya',
     'Etiyopya',
-    'Falkland Adaları (Malvinalar)',
+    'Falkland Adaları',
     'Faroe Adaları',
     'Fas',
     'Fiji',
@@ -186,11 +189,13 @@ ulkeListesi = [
     'Heard Adası ve McDonald Adaları',
     'Hindistan',
     'Hint Okyanusu İngiliz Bölgesi',
+    'Kuzey Kıbrıs Türk Cumhuriyeti',
     'Hollanda',
     'Hollanda Antilleri',
     'Honduras',
-    'Hong Kong SAR - Çin',
+    'Hong Kong',
     'Hırvatistan',
+    'Kuzey Irak',
     'Irak',
     'İngiliz Virgin Adaları',
     'İran',
@@ -216,7 +221,7 @@ ulkeListesi = [
     'Kolombiya',
     'Komorlar',
     'Kongo',
-    'Kongo Demokratik Cumhuriyeti',
+    'Kongo',
     'Kosta Rika',
     'Kuveyt',
     'Kuzey Kore',
@@ -266,6 +271,7 @@ ulkeListesi = [
     'Norfolk Adası',
     'Norveç',
     'Orta Afrika Cumhuriyeti',
+    'Afrika',
     'Özbekistan',
     'Pakistan',
     'Palau',
@@ -280,7 +286,7 @@ ulkeListesi = [
     'Reunion',
     'Romanya',
     'Ruanda',
-    'Rusya Federasyonu',
+    'Rusya',
     'Saint Helena',
     'Saint Kitts ve Nevis',
     'Saint Lucia',
@@ -337,49 +343,82 @@ ulkeListesi = [
     'Zambiya',
     'Zimbabve'
 ]
-# TODO Şehir listesi JSON dosyasından çekilmeli ve kullanılmalı
 sehirListesi = []
 
-#with open('cities.json', 'rb') as data_file:
-#    data = json.load(data_file)
-#    print(data)
+f = open('turkiyesehirler.json', encoding='utf-8')
+data = json.load(f)
+for i in data['cities']:
+    sehirListesi.append(i['name'])
+f.close()
 
-# print ('Retrieved', len(data), 'characters')
-# parsed_json = (json.loads(data.decode("utf-8")))
-# sehirDosyasi.close()
-
-# for i in range(len(sehirData["cities"])):
-#    sehirListesi.append(sehirData['cities'][i]['name'])
-
-#print(len(sehirListesi))
-
-isaretlenmisKelimeListesi = []
-print(paragraf)
+isaretlenenYerIsimleri = []
 paragraf = paragraf.strip()
-kelimeListesi = paragraf.split(" ")
+islenmemisKelimeler = paragraf.split(" ")
+kelimeListesi = []
+
+print("Kelimeler temizleniyor ve ayıklanıyor.")
+for i in range(len(islenmemisKelimeler)):
+    islenmemisKelimeler[i] = islenmemisKelimeler[i].strip()
+    islenmemisKelimeler[i] = islenmemisKelimeler[i].replace(",", "")
+    islenmemisKelimeler[i] = islenmemisKelimeler[i].replace(".", "")
+    islenmemisKelimeler[i] = islenmemisKelimeler[i].replace("(", "")
+    islenmemisKelimeler[i] = islenmemisKelimeler[i].replace(")", "")
+    islenmemisKelimeler[i] = islenmemisKelimeler[i].replace('"', "")
+    islenmemisKelimeler[i] = islenmemisKelimeler[i].replace("#", "")
+    islenmemisKelimeler[i] = islenmemisKelimeler[i].replace(" ", "")
+    islenmemisKelimeler[i] = islenmemisKelimeler[i].replace(";", "")
+    islenmemisKelimeler[i] = islenmemisKelimeler[i].replace(":", "")
+    if len(islenmemisKelimeler[i]) > 1:
+        kelimeListesi.append(islenmemisKelimeler[i])
 
 # Kelimelerin aynı zamanda büyük harfleri versiyonları listeye ekleniyor. Örn: (dağ > Dağ)
 for i in range(len(anahtarKelimeListesi2)):
     anahtarKelimeListesi2.append(anahtarKelimeListesi2[i].capitalize())
 
-
+print("Yer işaretleme gerçekleştiriliyor.")
 for i in range(len(kelimeListesi)):
-    kelime = kelimeListesi[i]
-    kelime = kelime.replace(",", "")
-    kelime = kelime.replace(".", "")
 
+    if i == 10000:
+        print("10.000 kelime işlendi.")
+    if i == 50000:
+        print("50.000 kelime işlendi.")
+    if i == 100000:
+        print("100.000 kelime işlendi.")
+    if i == 200000:
+        print("200.000 kelime işlendi.")
+    if i == 300000:
+        print("300.000 kelime işlendi.")
+    if i == 400000:
+        print("400.000 kelime işlendi.")
+
+    shouldContinue = False
+    if (kelimeListesi[i] != " ") | (kelimeListesi[i] != "  ") | (kelimeListesi[i] != ' "') | (kelimeListesi[i] != '" '):
+        kelime = kelimeListesi[i]
+
+    # Kural 3 : Aşağıdaki ifadelerden (anahtarKelimeListesi3) biri kelimenin içinde yer alıyorsa (kelime bileşikse)
+    # kelimenin tamamı işaretlenir:
+    for j in range(len(anahtarKelimeListesi3)):
+        if (anahtarKelimeListesi3[j] in kelimeListesi[i]) & (kelimeListesi[i] != anahtarKelimeListesi3[j]) & (
+                kelimeListesi[i][0].isupper()):
+            isaretlenenYerIsimleri.append(kelimeListesi[i])
+            shouldContinue = True
+
+    if shouldContinue:
+        continue
     # Kural 1 : Aşağıda belirtilen (anahtarKelimeListesi1) ifadelerden herhangi biri büyük harfle başlayan bir
     # kelimeden önce veya sonra yer alıyorsa işaretlenir:
     for j in range(len(anahtarKelimeListesi1)):
         if (kelimeListesi[i] == anahtarKelimeListesi1[j]) | (anahtarKelimeListesi1[j] in kelimeListesi[i]):
-            kelimeListesi[i] = kelimeListesi[i].replace(",", "")
-            kelimeListesi[i] = kelimeListesi[i].replace(".", "")
-            if i >= len(kelimeListesi):
-                if kelimeListesi[i + 1][0].isupper():
-                    isaretlenmisKelimeListesi.append("%s %s" % (kelimeListesi[i], kelimeListesi[i + 1]))
-            elif i != 0:
+
+            if kelimeListesi[i + 1][0].isupper():
+                isaretlenenYerIsimleri.append("%s %s" % (kelimeListesi[i], kelimeListesi[i + 1]))
+                shouldContinue = True
+            if i != 0:
                 if kelimeListesi[i - 1][0].isupper():
-                    isaretlenmisKelimeListesi.append("%s %s" % (kelimeListesi[i - 1], kelimeListesi[i]))
+                    isaretlenenYerIsimleri.append("%s %s" % (kelimeListesi[i - 1], kelimeListesi[i]))
+                    shouldContinue = True
+    if shouldContinue:
+        continue
     # Kural 2 : Aşağıdaki ifadelerden (anahtarKelimeListesi2) herhangi biri metinde bulunuyorsa, ifadeden önce yer
     # alan ardışık büyük harfle başlayan kelimeler işaretlenir:
     for j in range(len(anahtarKelimeListesi2)):
@@ -390,271 +429,534 @@ for i in range(len(kelimeListesi)):
                 if (i >= 2) & (kelimeListesi[i - 2][0].isupper()):
                     if (i >= 3) & (kelimeListesi[i - 3][0].isupper()):
                         if (i >= 4) & (kelimeListesi[i - 4][0].isupper()):
-                            isaretlenmisKelimeListesi.append("%s %s %s %s %s" % (kelimeListesi[i - 4],
-                                                                                 kelimeListesi[i - 3],
-                                                                                 kelimeListesi[i - 2],
-                                                                                 kelimeListesi[i - 1],
-                                                                                 kelimeListesi[i]))
-                        else:
-                            isaretlenmisKelimeListesi.append("%s %s %s %s" % (kelimeListesi[i - 3],
+                            isaretlenenYerIsimleri.append("%s %s %s %s %s" % (kelimeListesi[i - 4],
+                                                                              kelimeListesi[i - 3],
                                                                               kelimeListesi[i - 2],
                                                                               kelimeListesi[i - 1],
                                                                               kelimeListesi[i]))
+                            break
+
+                        else:
+                            isaretlenenYerIsimleri.append("%s %s %s %s" % (kelimeListesi[i - 3],
+                                                                           kelimeListesi[i - 2],
+                                                                           kelimeListesi[i - 1],
+                                                                           kelimeListesi[i]))
+                            break
                     else:
-                        isaretlenmisKelimeListesi.append("%s %s %s" % (kelimeListesi[i - 2], kelimeListesi[i - 1],
-                                                                       kelimeListesi[i]))
-
+                        isaretlenenYerIsimleri.append("%s %s %s" % (kelimeListesi[i - 2], kelimeListesi[i - 1],
+                                                                    kelimeListesi[i]))
+                        break
                 else:
-                    isaretlenmisKelimeListesi.append("%s %s" % (kelimeListesi[i - 1], kelimeListesi[i]))
+                    isaretlenenYerIsimleri.append("%s %s" % (kelimeListesi[i - 1], kelimeListesi[i]))
+                    shouldContinue = True
+                    break
 
-    # Kural 3 : Aşağıdaki ifadelerden (anahtarKelimeListesi3) biri kelimenin içinde yer alıyorsa (kelime bileşikse)
-    # kelimenin tamamı işaretlenir:
-    for j in range(len(anahtarKelimeListesi3)):
-        if anahtarKelimeListesi3[j] in kelimeListesi[i]:
-            isaretlenmisKelimeListesi.append(kelime)
+    if shouldContinue:
+        continue
 
-    # Kural 4 : ‘de, ’da, ’den, ’dan, ’te, ’ta eklerinden önce büyük harfle başlayan bir kelime
-    # varsa yer olarak işaretlenir.
-    if ("’" in kelime) & (kelime[0].isupper()):
-        isaretlenmisKelimeListesi.append(kelime.split("’")[0])
-    elif ("'" in kelime) & (kelime[0].isupper()):
-        isaretlenmisKelimeListesi.append(kelime.split("'")[0])
+    if kelimeListesi[i][0].isupper():
+        for j in range(len(ulkeListesi)):
+            if "'" in kelimeListesi[i]:
+                if ulkeListesi[j] in kelimeListesi[i].split("'")[0]:
+                    isaretlenenYerIsimleri.append(kelimeListesi[i])
+                    shouldContinue = True
+            if ulkeListesi[j] == kelimeListesi[i]:
+                isaretlenenYerIsimleri.append(kelimeListesi[i])
+                shouldContinue = True
+            if ulkeListesi[j].upper() == kelimeListesi[i]:
+                isaretlenenYerIsimleri.append(kelimeListesi[i])
+                shouldContinue = True
 
-    kelimeListesi[i] = kelime
+    if shouldContinue:
+        continue
 
-# TODO isaretlenmisKelimeListesi duplicate bulundurmamalı.
+    if kelimeListesi[i][0].isupper():
+        for j in range(len(sehirListesi)):
+            if "'" in kelimeListesi[i]:
+                if sehirListesi[j] == kelimeListesi[i].split("'")[0]:
+                    isaretlenenYerIsimleri.append(kelimeListesi[i])
+            if sehirListesi[j] == kelimeListesi[i]:
+                isaretlenenYerIsimleri.append(kelimeListesi[i])
+            if sehirListesi[j].upper() == kelimeListesi[i]:
+                isaretlenenYerIsimleri.append(kelimeListesi[i])
 
-# Yer ismi işaretleme burada bitiyor.
+print("Yer işaretleme tamamlandı.İşaretlenen yer ismi sayısı: ")
+print(len(isaretlenenYerIsimleri))
 
-kelimesayisi = len(kelimeListesi)
+isaretlenmisParaListesi = []
 
-print("paragraftaki toplam kelime sayısı:", len(kelimeListesi))
-print("----------------------------------------------------------")
 
-#################################### Ünvandan sonra gelen kişi ismi etiketleme
+def get_amount(word_list):
+    processed_list = []
+    # remove comma
+    for word in word_list:
+        processed_list.append(word.replace(',', ''))
+
+    if not processed_list[0].replace('.', '').replace(',', '').replace('-', '').isnumeric() and processed_list[
+        0] not in transformations:
+        return False, 0
+
+    return True, ' '.join(processed_list)
+
+
+transformations = [
+    "bin",
+    "milyon",
+    "milyar",
+    "trilyon"
+]
+currencies = open('currencies.txt', encoding='utf-8').read().lower().split('\n')
+input_lines = paragraf.lower().split('\n')
+input_words = []
+for line in input_lines:
+    input_words += line.split(' ')
+
+    # O(n^2)
+for i in range(len(input_words)):
+    for currency in currencies:
+        if str(input_words[i]).startswith(currency) and (i > 0 and (
+                input_words[i - 1].replace('-', '').replace('.', '').isnumeric() or input_words[i - 1] in
+                transformations)):
+            first_index = i
+            while True:
+                is_available, amount_new = get_amount(input_words[first_index - 1:i])
+                if not is_available:
+                    break
+                amount = amount_new
+                first_index -= 1
+            isaretlenmisParaListesi.append(f"{amount} {currency}")
+print("Para işaretleme tamamlandı. İşaretlenen para sayısı:")
+print(len(isaretlenmisParaListesi))
+
+Kelimesayisi = paragraf.splitlines()
+isaretliKisiListesi = []
+
+print("Kişi işaretleme üzerinde çalışılıyor...")
+b = 0
+for i in Kelimesayisi:
+    kelimeler = i.split()
+    for a in kelimeler:
+        b = b + 1
+
+liste = paragraf.split()
+kelimesayisi = len(liste)
+i = 0
+k = kelimesayisi
+kelimesayisi = len(liste)
+sayac = {}
+for kelime in liste:
+    if kelime not in sayac:
+        sayac[kelime] = 1
+    else:
+        sayac[kelime] += 1
+
+p = open('isimler.txt', 'r', encoding='utf-8')
+isimler = p.read().splitlines()
+i = 0
+isimsayac = 0
+for i in range(kelimesayisi):
+    if liste[i].upper() in isimler and liste[i + 1].upper() not in isimler and liste[i + 1][0].isupper() == 1:
+        liste[i] = "<b_enamex TYPE='PERSON'> " + liste[i] + " <e_enamex>"
+        isimsayac += 1
+        isaretliKisiListesi.append(f"{liste[i]}")
+    elif liste[i].upper() in isimler and liste[i + 1].upper() in isimler and liste[i + 2].upper() not in isimler and \
+            liste[i + 1][0].isupper() == 1 and liste[i + 2][0].isupper() == 1:
+        isimsayac += 1
+        isaretliKisiListesi.append(f"{liste[i]} {liste[i + 1]}")
+    elif liste[i].upper() in isimler and liste[i + 1].upper() in isimler and liste[i + 2].upper() in isimler and \
+            liste[i + 1][0].isupper() == 1 and liste[i + 2][0].isupper() == 1 and liste[i + 3][0].isupper() == 1:
+        isimsayac += 1
+        isaretliKisiListesi.append(f"{liste[i]} {liste[i + 1]} {liste[i + 2]}")
 keywords = open('anahtarOncegelen.txt', 'r', encoding='utf-8')
 unvansayisi = keywords.readlines()
 for i in unvansayisi:
     keywords = i.split(",")
 u = -1
-for i in keywords: u = u + 1  ######### ünvan sayısı
+for i in keywords: u = u + 1  # ünvan sayısı
 i = 0
 for i in range(kelimesayisi):
-    if kelimeListesi[i] in keywords and kelimeListesi[i + 1] not in keywords:
-        x = kelimeListesi[i + 1]
-        x2 = kelimeListesi[i + 2]
-        x3 = kelimeListesi[i + 3]
-        xS = len(kelimeListesi[i + 1])
-        x2S = len(kelimeListesi[i + 2])
-        x3S = len(kelimeListesi[i + 3])
+    if liste[i] in keywords and liste[i + 1] not in keywords:
+        x = liste[i + 1]
+        x2 = liste[i + 2]
+        x3 = liste[i + 3]
+        xS = len(liste[i + 1])
+        x2S = len(liste[i + 2])
+        x3S = len(liste[i + 3])
         if x[0].isupper() == 1:
             if x[xS - 1] != ',' and x[xS - 1] != '.':
-                print("isim:", kelimeListesi[i + 1])
-                yazdir = open('isimListem.txt', 'a', encoding='utf-8')
-                yazdir.write(",")
-                yazdir.write(kelimeListesi[i + 1])
-                yazdir.close()
-                kelimeListesi[i + 1] = "<b_enamex TYPE='PERSON'> " + kelimeListesi[i + 1]
+                yazdır = open('isimListem.txt', 'a', encoding='utf-8')
+                yazdır.write(",")
+                yazdır.write(liste[i + 1])
+                yazdır.close()
+                liste[i + 1] = "<b_enamex TYPE='PERSON'> " + liste[i + 1]
             else:
                 if x[xS - 1] == ',':
                     x = x.replace(',', '')
-                    print("isim:", x)
-                    yazdir = open('isimListem.txt', 'a', encoding='utf-8')
-                    yazdir.write(",")
-                    yazdir.write(x)
-                    yazdir.close()
-                    kelimeListesi[i + 1] = "<b_enamex TYPE='PERSON'> " + kelimeListesi[i + 1] + " <e_enamex>"
+                    yazdır = open('isimListem.txt', 'a', encoding='utf-8')
+                    yazdır.write(",")
+                    yazdır.write(x)
+                    yazdır.close()
+                    liste[i + 1] = "<b_enamex TYPE='PERSON'> " + liste[i + 1] + " <e_enamex>"
+                    isimsayac += 1
+                    isaretliKisiListesi.append(f"{liste[i]} {liste[i + 1]}")
                     continue
                 elif x[xS - 1] == '.':
                     x = x.replace('.', '')
-                    print("isim:", x)
-                    yazdir = open('isimListem.txt', 'a', encoding='utf-8')
-                    yazdir.write(",")
-                    yazdir.write(x)
-                    yazdir.close()
-                    kelimeListesi[i + 1] = "<b_enamex TYPE='PERSON'> " + kelimeListesi[i + 1] + " <e_enamex>"
+                    isaretliKisiListesi.append(f"{liste[i]} {x}")
+                    yazdır = open('isimListem.txt', 'a', encoding='utf-8')
+                    yazdır.write(",")
+                    yazdır.write(x)
+                    yazdır.close()
+                    liste[i + 1] = "<b_enamex TYPE='PERSON'> " + liste[i + 1] + " <e_enamex>"
+                    isimsayac += 1
+                    isaretliKisiListesi.append(f"{liste[i + 1]}")
                     continue
         else:
             continue
         if x2[0].isupper() == 1:
             if x2[x2S - 1] != ',' and x2[x2S - 1] != '.':
-                print("isim devamı:", kelimeListesi[i + 2])
-                yazdir = open('isimListem.txt', 'a', encoding='utf-8')
-                yazdir.write(",")
-                yazdir.write(kelimeListesi[i + 2])
-                yazdir.close()
-                kelimeListesi[i + 2] = kelimeListesi[i + 2]
+                yazdır = open('isimListem.txt', 'a', encoding='utf-8')
+                yazdır.write(",")
+                yazdır.write(liste[i + 2])
+                yazdır.close()
             else:
                 if x2[x2S - 1] == ',':
                     x2 = x2.replace(',', '')
-                    print("isim devamı:", x2)
-                    yazdir = open('isimListem.txt', 'a', encoding='utf-8')
-                    yazdir.write(",")
-                    yazdir.write(x2)
-                    yazdir.close()
-                    kelimeListesi[i + 2] = kelimeListesi[i + 2] + " <e_enamex>"
+                    yazdır = open('isimListem.txt', 'a', encoding='utf-8')
+                    yazdır.write(",")
+                    yazdır.write(x2)
+                    yazdır.close()
+                    liste[i + 2] = liste[i + 2] + " <e_enamex>"
+                    isimsayac += 1
+                    isaretliKisiListesi.append(f"{liste[i + 1]} {liste[i + 2]}")
                     continue
                 elif x2[x2S - 1] == '.':
                     x2 = x2.replace('.', '')
-                    print("isim devamı:", x2)
-                    yazdir = open('isimListem.txt', 'a', encoding='utf-8')
-                    yazdir.write(",")
-                    yazdir.write(x2)
-                    yazdir.close()
-                    kelimeListesi[i + 2] = kelimeListesi[i + 2] + " <e_enamex>"
+                    yazdır = open('isimListem.txt', 'a', encoding='utf-8')
+                    yazdır.write(",")
+                    yazdır.write(x2)
+                    yazdır.close()
+                    liste[i + 2] = liste[i + 2] + " <e_enamex>"
+                    isimsayac += 1
+                    isaretliKisiListesi.append(f"{liste[i + 1]} {liste[i + 2]}")
                     continue
 
 
         else:
+            liste[i + 1] = liste[i + 1] + " <e_enamex>"
+            isimsayac += 1
+            isaretliKisiListesi.append(f"{liste[i + 1]}")
             continue
         if x3[0].isupper() == 1:
             if x3[x3S - 1] != ',' and x3[x3S - 1] != '.':
-                print("isim devamı:", kelimeListesi[i + 3])
-                yazdir = open('isimListem.txt', 'a', encoding='utf-8')
-                yazdir.write(",")
-                yazdir.write(kelimeListesi[i + 3])
-                yazdir.close()
-                kelimeListesi[i + 3] = kelimeListesi[i + 3] + " <e_enamex>"
+                yazdır = open('isimListem.txt', 'a', encoding='utf-8')
+                yazdır.write(",")
+                yazdır.write(liste[i + 3])
+                yazdır.close()
+                liste[i + 3] = liste[i + 3] + " <e_enamex>"
+                isaretliKisiListesi.append(f"{liste[i + 1]} {liste[i + 2]} {liste[i + 3]}")
+                isimsayac += 1
             else:
                 if x3[x3S - 1] == ',':
                     x3 = x3.replace(',', '')
-                    print("isim devamı:", x3)
-                    yazdir = open('isimListem.txt', 'a', encoding='utf-8')
-                    yazdir.write(",")
-                    yazdir.write(x3)
-                    yazdir.close()
-                    kelimeListesi[i + 3] = kelimeListesi[i + 3] + " <e_enamex>"
+                    yazdır = open('isimListem.txt', 'a', encoding='utf-8')
+                    yazdır.write(",")
+                    yazdır.write(x3)
+                    yazdır.close()
+                    liste[i + 3] = liste[i + 3] + " <e_enamex>"
+                    isimsayac += 1
+                    isaretliKisiListesi.append(f"{liste[i + 1]} {liste[i + 2]} {liste[i + 3]}")
                     continue
                 elif x3[x3S - 1] == '.':
                     x3 = x3.replace('.', '')
-                    print("isim devamı:", x3)
-                    yazdir = open('isimListem.txt', 'a', encoding='utf-8')
-                    yazdir.write(",")
-                    yazdir.write(x3)
-                    yazdir.close()
-                    kelimeListesi[i + 3] = kelimeListesi[i + 3] + " <e_enamex>"
+                    yazdır = open('isimListem.txt', 'a', encoding='utf-8')
+                    yazdır.write(",")
+                    yazdır.write(x3)
+                    yazdır.close()
+                    liste[i + 3] = liste[i + 3] + " <e_enamex>"
+                    isimsayac += 1
+                    isaretliKisiListesi.append(f"{liste[i + 1]} {liste[i + 2]} {liste[i + 3]}")
                     continue
 
         else:
+            liste[i + 2] = liste[i + 2] + " <e_enamex>"
+            isimsayac += 1
+            isaretliKisiListesi.append(f"{liste[i + 1]} {liste[i + 2]}")
+            continue
+    else:
+        continue
+keywords = open('anahtarsonragelen.txt', 'r', encoding='utf-8')
+unvansayisi = keywords.readlines()
+for i in unvansayisi:
+    keywords = i.split(",")
+u = -1
+for i in keywords: u = u + 1  # ünvan sayısı
+i = 0
+for i in range(kelimesayisi):
+    if liste[i] in keywords and liste[i + 1] not in keywords:
+        x = liste[i - 1]
+        x2 = liste[i - 2]
+        x3 = liste[i - 3]
+        xS = len(liste[i - 1])
+        x2S = len(liste[i - 2])
+        x3S = len(liste[i - 3])
+        if x[0].isupper() == 1:
+            if x[xS - 1] != ',' and x[xS - 1] != '.':
+                yazdır = open('isimListem.txt', 'a', encoding='utf-8')
+                yazdır.write(",")
+                yazdır.write(liste[i - 1])
+                yazdır.close()
+                liste[i - 1] = liste[i - 1] + " <e_enamex>"
+            else:
+                if x[xS - 1] == ',':
+                    x = x.replace(',', '')
+                    yazdır = open('isimListem.txt', 'a', encoding='utf-8')
+                    yazdır.write(",")
+                    yazdır.write(x)
+                    yazdır.close()
+                    liste[i - 1] = "<b_enamex TYPE='PERSON'> " + liste[i - 1] + " <e_enamex>"
+                    isimsayac += 1
+                    isaretliKisiListesi.append(f"{liste[i - 1]}")
+                    continue
+                elif x[xS - 1] == '.':
+                    x = x.replace('.', '')
+                    yazdır = open('isimListem.txt', 'a', encoding='utf-8')
+                    yazdır.write(",")
+                    yazdır.write(x)
+                    yazdır.close()
+                    liste[i - 1] = "<b_enamex TYPE='PERSON'> " + liste[i - 1] + " <e_enamex>"
+                    isimsayac += 1
+                    isaretliKisiListesi.append(f"{liste[i - 1]}")
+                    continue
+        else:
+            continue
+        if x2[0].isupper() == 1:
+            if x2[x2S - 1] != ',' and x2[x2S - 1] != '.':
+                yazdır = open('isimListem.txt', 'a', encoding='utf-8')
+                yazdır.write(",")
+                yazdır.write(liste[i - 2])
+                yazdır.close()
+            else:
+                if x2[x2S - 1] == ',':
+                    x2 = x2.replace(',', '')
+                    yazdır = open('isimListem.txt', 'a', encoding='utf-8')
+                    yazdır.write(",")
+                    yazdır.write(x2)
+                    yazdır.close()
+                    liste[i - 2] = "<b_enamex TYPE='PERSON'> " + liste[i - 2]
+                    isimsayac += 1
+                    isaretliKisiListesi.append(f"{liste[i - 2]} {liste[i - 1]}")
+                    continue
+                elif x2[x2S - 1] == '.':
+                    x2 = x2.replace('.', '')
+                    yazdır = open('isimListem.txt', 'a', encoding='utf-8')
+                    yazdır.write(",")
+                    yazdır.write(x2)
+                    yazdır.close()
+                    liste[i - 2] = "<b_enamex TYPE='PERSON'> " + liste[i - 2]
+                    isimsayac += 1
+                    isaretliKisiListesi.append(f"{liste[i - 2]} {liste[i - 1]}")
+                    continue
+
+
+        else:
+            liste[i - 1] = "<b_enamex TYPE='PERSON'> " + liste[i - 1]
+            isimsayac += 1
+            isaretliKisiListesi.append(f"{liste[i - 1]}")
+
+            continue
+        if x3[0].isupper() == 1:
+            if x3[x3S - 1] != ',' and x3[x3S - 1] != '.':
+                yazdır = open('isimListem.txt', 'a', encoding='utf-8')
+                yazdır.write(",")
+                yazdır.write(liste[i - 3])
+                yazdır.close()
+                liste[i - 3] = "<b_enamex TYPE='PERSON'> " + liste[i - 3]
+                isimsayac += 1
+                isaretliKisiListesi.append(f"{liste[i - 3]} {liste[i - 2]} {liste[i - 1]}")
+            else:
+                if x3[x3S - 1] == ',':
+                    x3 = x3.replace(',', '')
+                    yazdır = open('isimListem.txt', 'a', encoding='utf-8')
+                    yazdır.write(",")
+                    yazdır.write(x3)
+                    yazdır.close()
+                    liste[i - 3] = "<b_enamex TYPE='PERSON'> " + liste[i - 3]
+                    isimsayac += 1
+                    isaretliKisiListesi.append(f"{liste[i - 3]} {liste[i - 2]} {liste[i - 1]}")
+                    continue
+                elif x3[x3S - 1] == '.':
+                    x3 = x3.replace('.', '')
+                    yazdır = open('isimListem.txt', 'a', encoding='utf-8')
+                    yazdır.write(",")
+                    yazdır.write(x3)
+                    yazdır.close()
+                    liste[i - 3] = "<b_enamex TYPE='PERSON'> " + liste[i - 3]
+                    isimsayac += 1
+                    isaretliKisiListesi.append(f"{liste[i - 3]} {liste[i - 2]} {liste[i - 1]}")
+                    continue
+
+        else:
+            liste[i - 2] = "<b_enamex TYPE='PERSON'> " + liste[i - 2]
+            isaretliKisiListesi.append(f"{liste[i - 2]} {liste[i - 1]}")
+            isimsayac += 1
             continue
     else:
         continue
 
-#################################### Ünvandan önce gelen kişi ismi etiketleme
-keywords = open('anahtarSonragelen.txt', 'r', encoding='utf-8')
+print("Kişi işaretleme tamamlandı. İşaretlenen kişi sayısı: ")
+print(len(isaretliKisiListesi))
+
+isaretlenenKurumListesi = []
+
+keywords = open('kurumAnahtar.txt', 'r', encoding='utf-8')
 unvansayisi = keywords.readlines()
 for i in unvansayisi:
     keywords = i.split(",")
 u = -1
 for i in keywords: u = u + 1  ######### ünvan sayısı
 i = 0
+kurumsayac = 0
 for i in range(kelimesayisi):
-    if kelimeListesi[i] in keywords:
-        x = kelimeListesi[i - 3]
-        x2 = kelimeListesi[i - 2]
-        x3 = kelimeListesi[i - 1]
-        xS = len(kelimeListesi[i - 3])
-        x2S = len(kelimeListesi[i - 2])
-        x3S = len(kelimeListesi[i - 1])
-        if x3[0].isupper() == 1:
-            if x3[x3S - 1] != ',' and x3[x3S - 1] != '.':
-                print("isim:", kelimeListesi[i - 1])
-                yazdir = open('isimListem.txt', 'a', encoding='utf-8')
-                yazdir.write(",")
-                yazdir.write(kelimeListesi[i - 1])
-                yazdir.close()
-                kelimeListesi[i - 1] = "< " + kelimeListesi[i - 1] + " B-Person>"
+    if liste[i] in keywords and liste[i + 1] not in keywords:
+        x = liste[i - 1]
+        x2 = liste[i - 2]
+        x3 = liste[i - 3]
+        xS = len(liste[i - 1])
+        x2S = len(liste[i - 2])
+        x3S = len(liste[i - 3])
+        if x[0].isupper() == 1:
+            if x[xS - 1] != ',' and x[xS - 1] != '.':
+                yazdır = open('kurumListem.txt', 'a', encoding='utf-8')
+                yazdır.write(",")
+                yazdır.write(liste[i - 1])
+                yazdır.close()
+                liste[i] = liste[i] + " <e_enamex>"
             else:
-                continue
-
+                if x[xS - 1] == ',':
+                    x = x.replace(',', '')
+                    yazdır = open('kurumListem.txt', 'a', encoding='utf-8')
+                    yazdır.write(",")
+                    yazdır.write(x)
+                    yazdır.close()
+                    liste[i - 1] = "<b_enamex TYPE='ORGANIZATION'> " + liste[i - 1] + liste[i] + " <e_enamex>"
+                    kurumsayac += 1
+                    isaretlenenKurumListesi.append(f"{liste[i - 1]} {liste[i]}")
+                    continue
+                elif x[xS - 1] == '.':
+                    x = x.replace('.', '')
+                    yazdır = open('kurumListem.txt', 'a', encoding='utf-8')
+                    yazdır.write(",")
+                    yazdır.write(x)
+                    yazdır.close()
+                    liste[i - 1] = "<b_enamex TYPE='ORGANIZATION'> " + liste[i - 1] + liste[i] + " <e_enamex>"
+                    kurumsayac += 1
+                    isaretlenenKurumListesi.append(f"{liste[i - 1]} {liste[i]}")
+                    continue
         else:
             continue
         if x2[0].isupper() == 1:
             if x2[x2S - 1] != ',' and x2[x2S - 1] != '.':
-                print("isim devamı:", kelimeListesi[i - 2])
-                yazdir = open('isimListem.txt', 'a', encoding='utf-8')
-                yazdir.write(",")
-                yazdir.write(kelimeListesi[i - 2])
-                yazdir.close()
-                kelimeListesi[i - 2] = "< " + kelimeListesi[i - 2] + " B-Person>"
+                yazdır = open('kurumListem.txt', 'a', encoding='utf-8')
+                yazdır.write(",")
+                yazdır.write(liste[i - 2])
+                yazdır.close()
             else:
-                continue
+                if x2[x2S - 1] == ',':
+                    x2 = x2.replace(',', '')
+                    yazdır = open('kurumListem.txt', 'a', encoding='utf-8')
+                    yazdır.write(",")
+                    yazdır.write(x2)
+                    yazdır.close()
+                    liste[i - 2] = "<b_enamex TYPE='ORGANIZATION'> " + liste[i - 2]
+                    kurumsayac += 1
+                    isaretlenenKurumListesi.append(f"{liste[i - 2]} {liste[i - 1]}")
+                    continue
+                elif x2[x2S - 1] == '.':
+                    x2 = x2.replace('.', '')
+                    yazdır = open('kurumListem.txt', 'a', encoding='utf-8')
+                    yazdır.write(",")
+                    yazdır.write(x2)
+                    yazdır.close()
+                    liste[i - 2] = "<b_enamex TYPE='ORGANIZATION'> " + liste[i - 2]
+                    kurumsayac += 1
+                    isaretlenenKurumListesi.append(f"{liste[i - 2]} {liste[i - 1]}")
+                    continue
+
 
         else:
+            liste[i - 1] = "<b_enamex TYPE='ORGANIZATION'> " + liste[i - 1]
+            kurumsayac += 1
+            isaretlenenKurumListesi.append(f"{liste[i - 1]}")
+
             continue
-        if x[0].isupper() == 1:
-            if x[xS - 1] != ',' and x[xS - 1] != '.':
-                print("isim devamı:", kelimeListesi[i - 3])
-                yazdir = open('isimListem.txt', 'a', encoding='utf-8')
-                yazdir.write(",")
-                yazdir.write(kelimeListesi[i - 3])
-                yazdir.close()
-                kelimeListesi[i - 3] = "< " + kelimeListesi[i - 3] + " B-Person>"
+        if x3[0].isupper() == 1:
+            if x3[x3S - 1] != ',' and x3[x3S - 1] != '.':
+                yazdır = open('kurumListem.txt', 'a', encoding='utf-8')
+                yazdır.write(",")
+                yazdır.write(liste[i - 3])
+                yazdır.close()
+                liste[i - 3] = "<b_enamex TYPE='ORGANIZATION'> " + liste[i - 3]
+                kurumsayac += 1
+                isaretlenenKurumListesi.append(f"{liste[i - 3]} {liste[i - 2]} {liste[i - 3]}")
             else:
-                continue
+                if x3[x3S - 1] == ',':
+                    x3 = x3.replace(',', '')
+                    yazdır = open('kurumListem.txt', 'a', encoding='utf-8')
+                    yazdır.write(",")
+                    yazdır.write(x3)
+                    yazdır.close()
+                    liste[i - 3] = "<b_enamex TYPE='ORGANIZATION'> " + liste[i - 3]
+                    kurumsayac += 1
+                    isaretlenenKurumListesi.append(f"{liste[i - 3]} {liste[i - 2]} {liste[i - 1]}")
+                    continue
+                elif x3[x3S - 1] == '.':
+                    x3 = x3.replace('.', '')
+                    yazdır = open('kurumListem.txt', 'a', encoding='utf-8')
+                    yazdır.write(",")
+                    yazdır.write(x3)
+                    yazdır.close()
+                    liste[i - 3] = "<b_enamex TYPE='ORGANIZATION'> " + liste[i - 3]
+                    kurumsayac += 1
+                    isaretlenenKurumListesi.append(f"{liste[i - 3]} {liste[i - 2]} {liste[i - 1]}")
+                    continue
 
         else:
+            liste[i - 2] = "<b_enamex TYPE='ORGANIZATION'> " + liste[i - 2]
+            kurumsayac += 1
+            isaretlenenKurumListesi.append(f"{liste[i - 2]} {liste[i - 1]}")
             continue
     else:
         continue
 
-print("----------------------------------------------------------------------")
-keywords = open('kurumAnahtar.txt', 'r', encoding='utf-8')
-kurumAnahtarsayisi = keywords.readlines()
-for i in kurumAnahtarsayisi:
-    keywords = i.split(",")
-    u = -1
-    for i in keywords: u = u + 1
-    i = 0
-    for i in range(kelimesayisi):
-        if kelimeListesi[i] in keywords:
-            x = kelimeListesi[i - 3]
-            x2 = kelimeListesi[i - 2]
-            x3 = kelimeListesi[i - 1]
-            x4 = kelimeListesi[i]
-            if x[0].isupper() == 1:
-                print("Kurum ismi:", kelimeListesi[i - 3])
-                yazdir = open('kurumListem.txt', 'a', encoding='utf-8')
-                yazdir.write(",")
-                yazdir.write(kelimeListesi[i - 3])
-                yazdir.close()
-            else:
-                continue
-            if x2[0].isupper() == 1:
-                print("Kurum ismi devamı:", kelimeListesi[i - 2])
-                yazdir = open('kurumListem.txt', 'a', encoding='utf-8')
-                yazdir.write(",")
-                yazdir.write(kelimeListesi[i - 2])
-                yazdir.close()
-            else:
-                continue
-            if x3[0].isupper() == 1:
-                print("Kurum ismi devamı:", kelimeListesi[i - 1])
-                yazdir = open('kurumListem.txt', 'a', encoding='utf-8')
-                yazdir.write(",")
-                yazdir.write(kelimeListesi[i - 1])
-                yazdir.close()
-            else:
-                continue
-            if x4[0].isupper() == 1:
-                print("Kurum niteliği:", kelimeListesi[i])
-                yazdir = open('kurumListem.txt', 'a', encoding='utf-8')
-                yazdir.write(",")
-                yazdir.write(kelimeListesi[i])
-                yazdir.close()
-            else:
-                continue
-        else:
-            continue
+etiketlenmisText = paragraf
+print("Derlem etiketleniyor...")
+isaretlenenYerIsimleri = list(dict.fromkeys(isaretlenenYerIsimleri))
+isaretlenmisParaListesi = list(dict.fromkeys(isaretlenmisParaListesi))
+isaretliKisiListesi = list(dict.fromkeys(isaretliKisiListesi))
+print(isaretlenenKurumListesi)
+isaretlenenKurumListesi = list(dict.fromkeys(isaretlenenKurumListesi))
 
-    # son = open('etiketli.txt', 'a', encoding='utf-8')
-    # i=0
-    # sonkelimesayisi = len(liste)
-    # while i <= sonkelimesayisi:
-    # son.write(liste[i])
-    # son.write(" ")
-    # i = i + 1
-    # son.close()
+for i in range(len(isaretliKisiListesi)):
+    etiketlenmisText = etiketlenmisText.replace(f'{isaretliKisiListesi[i]}',
+                                                f'<b_enamex TYPE="PERSON">{isaretliKisiListesi[i]}<e_enamex>')
+for i in range(len(isaretlenenYerIsimleri)):
+    isaretlenenYerIsimleri[i] = isaretlenenYerIsimleri[i].strip()
+    if isaretlenenYerIsimleri[i] in etiketlenmisText:
+        index = etiketlenmisText.index(isaretlenenYerIsimleri[i])
+        if etiketlenmisText[index - 1] != ">":
+            etiketlenmisText = etiketlenmisText.replace(f'{isaretlenenYerIsimleri[i]}',
+                                                        f'<b_enamex TYPE="LOCATION">{isaretlenenYerIsimleri[i]}<e_enamex>')
 
-print("Yer için işaretlenmiş kelime listesi: ")
-print(isaretlenmisKelimeListesi)
+for i in range(len(isaretlenmisParaListesi)):
+    etiketlenmisText = etiketlenmisText.replace(f'{isaretlenmisParaListesi[i]}',
+                                                f'<b_numex TYPE="MONEY">{isaretlenmisParaListesi[i]}<e_numex>')
+
+for i in range(len(isaretlenenKurumListesi)):
+    etiketlenmisText = etiketlenmisText.replace(f'{isaretlenenKurumListesi[i]}',
+                                                f'<b_enamex TYPE="ORGANIZATION">{isaretlenenKurumListesi[i]}<e_enamex>')
+
+file = open('etiketliText.txt', 'w', encoding='utf-8')
+file.write(etiketlenmisText)
+file.close()
+print("İşlem tamamlandı. etiketliText.txt dosyasından etiketli dosyaya erişilebilir.")

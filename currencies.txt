@@ -1,0 +1,14 @@
+tl
+lira
+türk lirası
+dolar
+sterlin
+pound
+sent
+cent
+yuan
+euro
+₺
+$
+€
+¥

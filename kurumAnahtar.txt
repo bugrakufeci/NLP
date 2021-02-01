@@ -1,1 +1,1 @@
-Gazetesi,Kulübü,Fabrikası,Lisesi,Enstitüsü,Bakanlığı,Vakfı,Meclisi,Müdürlüğü,Komutanlığı,Şenliği,Belediyesi,Başkanlığı,Sendikası,Kurulu,Üst Kurulu,Kurumu,Genel Müdürlüğü,Enstitüsü,Üniversitesi,Kilisesi,Camisi
+Gazetesi,Kulübü,Fabrikası,Lisesi,Enstitüsü,Bakanlığı,Vakfı,Meclisi,Müdürlüğü,Komutanlığı,Şenliği,Belediyesi,Başkanlığı,Sendikası,Kurulu,Üst Kurulu,Kurumu,Genel Müdürlüğü,Enstitüsü,Üniversitesi,Kilisesi,Camisi,Okulu,Komutanlığı,Şirketi,A.Ş,Başkanlığı,Birimi,Merkezi,Birliği,Yüksekokulu,Konseyi,Ajansı,MYO,Hastanesi,Akademisi,Sanayi,Odası,Havuzu,Federasyonu,Ofisi,İşletmesi
